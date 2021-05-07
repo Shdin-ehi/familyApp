@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/appCalendar/calendar.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/appCalendar/calendar.vue</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;div class="mu-calendar" :class="{'mu-calendar-landspace': mode === 'landscape'}">
+  &lt;div class="mu-calendar-container">
+    &lt;div class="mu-calendar-monthday-container" v-if="displayMonthDay">
+      &lt;calendar-toolbar :slideType="slideType" :nextMonth="nextMonth" :prevMonth="prevMonth" @monthChange="handleMonthChange" :displayDates="displayDates" :dateTimeFormat="dateTimeFormat" />
+      &lt;div class="mu-calendar-week">
+        &lt;span class="mu-calendar-week-day" v-for="weekText, index in weekTexts" :key="index">{{weekText}}&lt;/span>
+      &lt;/div>
+      &lt;div class="mu-calendar-monthday">
+        &lt;transition :name="'mu-calendar-slide-' + slideType" v-for="displayDate, index in displayDates" :key="index">
+          &lt;div class="mu-calendar-monthday-slide" :key="displayDate.getTime()" >
+            &lt;calendar-month @selected="handleSelected" :shouldDisableDate="shouldDisableDate" :displayDate="displayDate" :firstDayOfWeek="firstDayOfWeek" :maxDate="maxDate" :minDate="minDate" :selectedDate="selectedDate" :shouldActivedDate="shouldActivedDate" />
+          &lt;/div>
+        &lt;/transition>
+      &lt;/div>
+    &lt;/div>
+  &lt;/div>
+&lt;/div>
+&lt;/template>
+
+&lt;script> 
+/**
+ * 日历面板模块。 部分参数详细介绍见文档{@link http://www.muse-ui.org/#/datePicker}
+ * @module components/appCalendar
+ * @requires muse-ui
+ * @requires keycode
+ * @param {Object} dateTimeFormat 时间格式化对象，见文档
+ * @param {Number} firstDayOfWeek=1 那一天作为一个星期的开始， 默认星期一， 有些情况可能会设置成星期日(0)
+ * @param {Date} initialDate=today 初始化显示的日期
+ * @param {Date} maxDate 可选择的最大日期
+ * @param {Date} minDate 可选择的最小日期
+ * @param {String} mode=portrait 竖屏显示，landscape横屏显示
+ * @param {Function} shouldDisableDate 判断日期是否不可用的函数，参数为当前做判断的日期,所有返回true的为匹配日期
+ * @param {Function} shouldActivedDate 判断日期处于活动状态的函数，参数为当前做判断的日期,所有返回true的为匹配日期
+ * @listens selected 日期被选择时触发的事件，参数为被点击日期date
+ * @listens monthChange 月份变化时触发，参数为新月份第一天的date
+ * @example
+ * &lt;app-calendar class="app-calendar" :maxDate="today" :shouldDisableDate="shouldDisableDate" :shouldActivedDate="shouldActivedDate" @selected="handleSelected" @monthChange="handleMonthChange"/>
+ */
+import calendarToolbar from './calendarToolbar'
+import calendarMonth from './calendarMonth'
+import * as dateUtils from 'muse-components/datePicker/dateUtils'
+import keycode from 'keycode'
+export default {
+  name:"app-calendar",
+  props: {
+    dateTimeFormat: {
+      type: Object,
+      default () {
+        return dateUtils.dateTimeFormat
+      }
+    },
+    firstDayOfWeek: {
+      type: Number,
+      default: 1
+    },
+    initialDate: {
+      type: Date,
+      default () {
+        return new Date()
+      }
+    },
+    maxDate: {
+      type: Date,
+      default () {
+        return dateUtils.addYears(new Date(), 100)
+      }
+    },
+    minDate: {
+      type: Date,
+      default () {
+        return dateUtils.addYears(new Date(), -100)
+      }
+    },
+    mode: {
+      type: String,
+      default: 'portrait',
+      validator (val) {
+        return val &amp;&amp; ['portrait', 'landscape'].indexOf(val) !== -1
+      }
+    },
+    shouldDisableDate: {
+      type: Function
+    },
+    shouldActivedDate: {
+      type: Function
+    }
+  },
+  data () {
+    const displayDate = dateUtils.cloneDate(this.initialDate)
+    displayDate.setDate(1)
+    return {
+      weekTexts: this.dateTimeFormat.getWeekDayArray(this.firstDayOfWeek),
+      displayDates: [displayDate],
+      selectedDate: this.initialDate,
+      slideType: 'next',
+      displayMonthDay: true
+    }
+  },
+  computed: {
+    prevMonth () {
+      return this.displayDates &amp;&amp; dateUtils.monthDiff(this.displayDates[0], this.minDate) > 0
+    },
+    nextMonth () {
+      return this.displayDates &amp;&amp; dateUtils.monthDiff(this.displayDates[0], this.maxDate) &lt; 0
+    }
+  },
+  methods: {
+    handleMonthChange (val) {
+      const displayDate = dateUtils.addMonths(this.displayDates[0], val)
+      this.changeDislayDate(displayDate)
+      this.$emit("monthChange",displayDate)
+    },
+    handleSelected (date) {
+      this.setSelected(date)
+      this.$emit("selected",date)
+    },
+    setSelected (date) {
+      this.selectedDate = date
+      this.changeDislayDate(date)
+    },
+    changeDislayDate (date) {
+      const oldDate = this.displayDates[0]
+      if (date.getFullYear() === oldDate.getFullYear() &amp;&amp; date.getMonth() === oldDate.getMonth()) return
+      this.slideType = date.getTime() > oldDate.getTime() ? 'next' : 'prev'
+      const displayDate = dateUtils.cloneDate(date)
+      displayDate.setDate(1)
+      this.displayDates.push(displayDate)
+      this.displayDates.splice(0, 1)
+    }
+  },
+  mounted () {
+   
+  },
+  beforeDestory () {
+   
+  },
+  watch: {
+    initialDate (val) {
+      this.selectedDate = val
+    }
+  },
+  components: {
+    'calendar-toolbar': calendarToolbar,
+    'calendar-month': calendarMonth
+  }
+}
+&lt;/script>
+
+&lt;style >
+
+
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-components_appCalendar.html">components/appCalendar</a></li><li><a href="module-components_appLoading.html">components/appLoading</a></li><li><a href="module-components_appUserBox.html">components/appUserBox</a></li><li><a href="module-components_editImage.html">components/editImage</a></li><li><a href="module-components_fileList.html">components/fileList</a></li><li><a href="module-components_menuNava_menuNava.html">components/menuNava/menuNava</a></li><li><a href="module-components_menuNava_menuNavaItem.html">components/menuNava/menuNavaItem</a></li><li><a href="module-components_myInputPage.html">components/myInputPage</a></li><li><a href="module-components_mySelectPage.html">components/mySelectPage</a></li><li><a href="module-components_myWebuploader.html">components/myWebuploader</a></li><li><a href="module-components_textImgBox.html">components/textImgBox</a></li><li><a href="module-components_timeline_timeline.html">components/timeline/timeline</a></li><li><a href="module-components_timeline_timelineItem.html">components/timeline/timelineItem</a></li><li><a href="module-components_vImg.html">components/vImg</a></li><li><a href="module-scripts_common.html">scripts/common</a></li><li><a href="module-scripts_configValid.html">scripts/configValid</a></li><li><a href="module-scripts_LunarCalendar.html">scripts/LunarCalendar</a></li><li><a href="module-scripts_vueMethods.html">scripts/vueMethods</a></li><li><a href="module-services.html">services</a></li><li><a href="module-services_AnniversaryService.html">services/AnniversaryService</a></li><li><a href="module-services_ArchiveService.html">services/ArchiveService</a></li><li><a href="module-services_BigEventService.html">services/BigEventService</a></li><li><a href="module-services_FamilyService.html">services/FamilyService</a></li><li><a href="module-services_UserService.html">services/UserService</a></li><li><a href="module-vuex-history.html">vuex-history</a></li><li><a href="module-vuex-loading.html">vuex-loading</a></li><li><a href="module-vuex-toast.html">vuex-toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="Vue.html">Vue</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jun 30 2017 09:20:36 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

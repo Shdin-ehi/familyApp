@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/myInputPage/myInputPage.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/myInputPage/myInputPage.vue</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;div class="my-input-box">
+    &lt;mu-bottom-sheet sheetClass="my-input-box-popup" :open="open" @close="close()" @show="showError=false,focusInput()">
+        &lt;vue-form :state="formstate">
+            &lt;validate>
+                &lt;mu-text-field ref="input" fullWidth multiLine :rows="3" :rowsMax="8" v-model="newValue" v-bind="rules" :label="rules.label||topTitle" :errorText="showError?errorText:''" :name="name?(name+'_clone'):''"/>
+            &lt;/validate>
+        &lt;/vue-form>
+        &lt;div class="my-input-box-btns">
+            &lt;mu-raised-button label="确定" @click="updateValue" primary/>
+            &lt;mu-raised-button label="取消" @click="close()"/>
+        &lt;/div>
+    &lt;/mu-bottom-sheet>
+    &lt;div>
+        &lt;span v-show="display">{{value}}&lt;/span>
+        &lt;input type="hidden" v-model="newValue" :name="name" v-if="isEmptyObj(rules)">
+        &lt;validate v-if="!isEmptyObj(rules)">
+            &lt;input type="hidden" v-model="newValue" :name="name" v-bind="rules">
+        &lt;/validate>
+    &lt;/div>
+&lt;/div>
+&lt;/template>
+
+&lt;script>
+/**
+ * input输入页面模块
+ * @module components/myInputPage
+ * @requires muse-ui
+ * @requires vue-form
+ * @param {String} name input的name,若要使用验证,则必填
+ * @param {String} value input的value，使用v-model时传入
+ * @param {Boolean} open=false 是否弹窗输入层
+ * @param {String} topTitle 输入层标题
+ * @param {Object} rules 验证规则
+ * @param {Object|String} errors 匹配验证的错误
+ * @param {Boolean} display=true 是否显示当前值
+ * @listens close 弹窗关闭时触发 
+ * @listens change 表单值确认修改时触发
+ * @listens input 用于触发更新v-model
+ * @example
+ * &lt;my-input-page topTitle="更改名称" v-model="itemData.name" :open="showInput.ipt4" @close="showInput.ipt4=false"  name='locateName' :rules="{required:'required', maxlength:'10',maxLength:10}" :errors="{required:'必填项',maxlength:'必须小于10个字符'}"/>
+ */
+  export default {
+ 		name: 'my-input-page',
+    data:function() {
+      return {
+      	openState:false,
+      	newValue:'',
+      	showError:false,
+        formstate:{}
+      }
+    },
+    props:{
+        name:{
+            'type':String,
+            'default':''
+        },
+    	value:{
+    		'default':''
+    	},
+    	open:{
+    		'type':Boolean,
+    		'default':false
+    	},
+    	topTitle:{
+    		'default':'编辑'
+    	},
+        rules:{
+            'type':Object,
+            'default':function(){return {}}
+        },
+        errors:{
+            'type':[Object,String],
+            'default':function(){return {}}
+        },
+        display:{
+            //显示选择结果
+            'type':Boolean,
+            'default':true
+        }
+    },
+    computed:{
+    	errorText (){
+            if (this.name) { 
+                if (typeof this.errors=='string') return this.errors
+      			var input=this.formstate[this.name+'_clone'];
+      			var list=this.errors
+    	    	if (input&amp;&amp;input.$invalid) {
+    	    		for(var i in list){
+    	    			if (input.$error[i]) {
+    	    				return list[i]
+    	    			}
+    	    		}
+                }
+	    	}
+	    	return ''
+    	}
+    },
+    mounted (){
+  		this.newValue=this.value||''
+    },
+    methods:{
+    	updateValue (){
+    		this.showError=true
+    		var formattedValue = this.newValue.trim()
+	      if (formattedValue !== this.newValue)
+	        this.newValue = formattedValue
+	      if (this.name&amp;&amp;this.formstate[this.name+'_clone'].$invalid) { return; }
+	      if (formattedValue!==this.value) {
+            this.$emit('input', formattedValue)
+	      	this.$emit('change', formattedValue)
+	      }
+    		this.close(true)
+    	},
+    	close (success){
+    		var vm=this
+            !success&amp;&amp;(this.newValue = this.value||'')
+    		this.showError=false
+    		setTimeout(function(){
+    			vm.$emit('close')
+    		},0)
+    	},
+	    focusInput (){
+	    	this.$refs.input.$el.querySelector('textarea').focus()
+	    },
+        isEmptyObj (o){
+            return JSON.stringify(o)=='{}'
+        }
+    },
+    watch:{
+        value:function(newVal,oldVal){
+            this.newValue=newVal||''
+        }
+    }
+  }
+&lt;/script>
+
+&lt;style>
+    .my-input-box{display: inline-block;}
+    .mu-bottom-sheet.my-input-box-popup{padding: 10px;background-color: #f9f9fa;}
+    .my-input-box-btns button{float: left;width: 50%;}
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-components_appCalendar.html">components/appCalendar</a></li><li><a href="module-components_appLoading.html">components/appLoading</a></li><li><a href="module-components_appUserBox.html">components/appUserBox</a></li><li><a href="module-components_editImage.html">components/editImage</a></li><li><a href="module-components_fileList.html">components/fileList</a></li><li><a href="module-components_menuNava_menuNava.html">components/menuNava/menuNava</a></li><li><a href="module-components_menuNava_menuNavaItem.html">components/menuNava/menuNavaItem</a></li><li><a href="module-components_myInputPage.html">components/myInputPage</a></li><li><a href="module-components_mySelectPage.html">components/mySelectPage</a></li><li><a href="module-components_myWebuploader.html">components/myWebuploader</a></li><li><a href="module-components_textImgBox.html">components/textImgBox</a></li><li><a href="module-components_timeline_timeline.html">components/timeline/timeline</a></li><li><a href="module-components_timeline_timelineItem.html">components/timeline/timelineItem</a></li><li><a href="module-components_vImg.html">components/vImg</a></li><li><a href="module-scripts_common.html">scripts/common</a></li><li><a href="module-scripts_configValid.html">scripts/configValid</a></li><li><a href="module-scripts_LunarCalendar.html">scripts/LunarCalendar</a></li><li><a href="module-scripts_vueMethods.html">scripts/vueMethods</a></li><li><a href="module-services.html">services</a></li><li><a href="module-services_AnniversaryService.html">services/AnniversaryService</a></li><li><a href="module-services_ArchiveService.html">services/ArchiveService</a></li><li><a href="module-services_BigEventService.html">services/BigEventService</a></li><li><a href="module-services_FamilyService.html">services/FamilyService</a></li><li><a href="module-services_UserService.html">services/UserService</a></li><li><a href="module-vuex-history.html">vuex-history</a></li><li><a href="module-vuex-loading.html">vuex-loading</a></li><li><a href="module-vuex-toast.html">vuex-toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="Vue.html">Vue</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jun 30 2017 09:20:36 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

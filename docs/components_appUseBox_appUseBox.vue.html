@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/appUseBox/appUseBox.vue</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/appUseBox/appUseBox.vue</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>&lt;template>
+&lt;div class="app-user-box">
+    &lt;router-link class="app-user-img-wr" :to="to||''">
+        &lt;img class="app-user-img" v-if="avatar" :src="avatar" @load="setImgSize">
+        &lt;img class="app-user-img" v-else src="./avatar-default.png" @load="setImgSize">
+    &lt;/router-link>
+    &lt;div class="app-user-name">{{username||''}}&lt;/div>
+    &lt;div class="app-user-other">
+        &lt;slot>&lt;/slot>
+    &lt;/div>
+&lt;/div>
+&lt;/template>
+
+&lt;script>
+/**
+ * 用户信息框模块
+ * @module components/appUserBox
+ * @requires scripts/common
+ * @param {String} avatar 头像url
+ * @param {String} username 用户名
+ * @param {Object} to 头像链接地址
+ * @example
+ * &lt;app-user-box :avatar="user.avatar" :username="user.username" :to="{name:'userData'}">
+    &lt;div>手机号：13549315&lt;/div>
+  &lt;/app-user-box>
+   
+  slots：
+  	default 名称之后 
+ */
+  import {setImgSize} from 'scripts/common'
+  export default {
+	name: 'app-user-box',
+    data:function() {
+      return {}
+    },
+    props:{
+        avatar:{
+            'type':String
+        },
+        username:{
+            'type':String
+        },
+    	to:{
+            'type':Object
+    	}
+    },
+    methods:{
+        setImgSize
+    }
+  }
+&lt;/script>
+
+&lt;style>
+    .app-user-box{text-align: center;padding: 10px;position: relative;}
+    .app-user-img-wr{display:block;text-align: center;margin:auto;position: relative;height: 110px;width: 110px;overflow: hidden;border-radius: 50%;border:3px solid #fff;background-color: #fff;-webkit-tap-highlight-color:rgba(255,255,255,.1)}
+    .app-user-img-wr img{position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-50%,-50%);transform: translate(-50%,-50%);}
+    .app-user-name{font-size: 16px;color: #338bc8;padding:10px 0 5px 0}
+    .app-user-other{font-size: 13px;color: #666;}
+&lt;/style>
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-components_appCalendar.html">components/appCalendar</a></li><li><a href="module-components_appLoading.html">components/appLoading</a></li><li><a href="module-components_appUserBox.html">components/appUserBox</a></li><li><a href="module-components_editImage.html">components/editImage</a></li><li><a href="module-components_fileList.html">components/fileList</a></li><li><a href="module-components_menuNava_menuNava.html">components/menuNava/menuNava</a></li><li><a href="module-components_menuNava_menuNavaItem.html">components/menuNava/menuNavaItem</a></li><li><a href="module-components_myInputPage.html">components/myInputPage</a></li><li><a href="module-components_mySelectPage.html">components/mySelectPage</a></li><li><a href="module-components_myWebuploader.html">components/myWebuploader</a></li><li><a href="module-components_textImgBox.html">components/textImgBox</a></li><li><a href="module-components_timeline_timeline.html">components/timeline/timeline</a></li><li><a href="module-components_timeline_timelineItem.html">components/timeline/timelineItem</a></li><li><a href="module-components_vImg.html">components/vImg</a></li><li><a href="module-scripts_common.html">scripts/common</a></li><li><a href="module-scripts_configValid.html">scripts/configValid</a></li><li><a href="module-scripts_LunarCalendar.html">scripts/LunarCalendar</a></li><li><a href="module-scripts_vueMethods.html">scripts/vueMethods</a></li><li><a href="module-services.html">services</a></li><li><a href="module-services_AnniversaryService.html">services/AnniversaryService</a></li><li><a href="module-services_ArchiveService.html">services/ArchiveService</a></li><li><a href="module-services_BigEventService.html">services/BigEventService</a></li><li><a href="module-services_FamilyService.html">services/FamilyService</a></li><li><a href="module-services_UserService.html">services/UserService</a></li><li><a href="module-vuex-history.html">vuex-history</a></li><li><a href="module-vuex-loading.html">vuex-loading</a></li><li><a href="module-vuex-toast.html">vuex-toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="Vue.html">Vue</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jun 30 2017 09:20:36 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

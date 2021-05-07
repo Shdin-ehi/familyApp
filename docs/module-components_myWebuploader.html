@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: components/myWebuploader</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: components/myWebuploader</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">文件上传模块</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rotatable</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">是否开启图片旋转,需后台根据旋转角度参数rotation处理</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">验证规则</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>uploadAccept</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">详见webuploader官网,uploadAccept事件，返回true时触发uploadSuccess，false触发uploadError</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_myWebuploader_myWebuploader.vue.html">components/myWebuploader/myWebuploader.vue</a>, <a href="components_myWebuploader_myWebuploader.vue.html#line2">line 2</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+<h5>Listens to Events:</h5>
+<ul>
+    <li>event:uploadSuccess 文件上传成功时触发，参数为服务器响应值</li>
+
+    <li>event:uploadComplete 文件上传完成后触发，参数为WebUploader的file对象</li>
+
+    <li>event:uploadFinished 所有文件上传结束后触发</li>
+</ul>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>&lt;my-webuploader :config="{
+          server:'/add',
+          accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+          }
+        }" @uploadSuccess="uploadSuccess">&lt;/my-webuploader></code></pre>
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:jquery</li>
+        
+            <li>module:WebUploader</li>
+        
+            <li>module:muse-ui</li>
+        </ul>
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-components_appCalendar.html">components/appCalendar</a></li><li><a href="module-components_appLoading.html">components/appLoading</a></li><li><a href="module-components_appUserBox.html">components/appUserBox</a></li><li><a href="module-components_editImage.html">components/editImage</a></li><li><a href="module-components_fileList.html">components/fileList</a></li><li><a href="module-components_menuNava_menuNava.html">components/menuNava/menuNava</a></li><li><a href="module-components_menuNava_menuNavaItem.html">components/menuNava/menuNavaItem</a></li><li><a href="module-components_myInputPage.html">components/myInputPage</a></li><li><a href="module-components_mySelectPage.html">components/mySelectPage</a></li><li><a href="module-components_myWebuploader.html">components/myWebuploader</a></li><li><a href="module-components_textImgBox.html">components/textImgBox</a></li><li><a href="module-components_timeline_timeline.html">components/timeline/timeline</a></li><li><a href="module-components_timeline_timelineItem.html">components/timeline/timelineItem</a></li><li><a href="module-components_vImg.html">components/vImg</a></li><li><a href="module-scripts_common.html">scripts/common</a></li><li><a href="module-scripts_configValid.html">scripts/configValid</a></li><li><a href="module-scripts_LunarCalendar.html">scripts/LunarCalendar</a></li><li><a href="module-scripts_vueMethods.html">scripts/vueMethods</a></li><li><a href="module-services.html">services</a></li><li><a href="module-services_AnniversaryService.html">services/AnniversaryService</a></li><li><a href="module-services_ArchiveService.html">services/ArchiveService</a></li><li><a href="module-services_BigEventService.html">services/BigEventService</a></li><li><a href="module-services_FamilyService.html">services/FamilyService</a></li><li><a href="module-services_UserService.html">services/UserService</a></li><li><a href="module-vuex-history.html">vuex-history</a></li><li><a href="module-vuex-loading.html">vuex-loading</a></li><li><a href="module-vuex-toast.html">vuex-toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="Vue.html">Vue</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jun 30 2017 09:20:36 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

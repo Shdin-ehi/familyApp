@@ -1,0 +1,107 @@
+注：
+0、请将dist文件夹部署在服务器上查看，服务器地址为根目录(如需修改项目发布地址，需修改配置文件重新打包)！！
+1、表单对象名许多都是随意命名的，需修改为与接口数据对象一致
+2、ajax交互模拟在services文件里，实际使用请删除模拟部分代码
+
+一、目录结构
+
+|-build    构建文件夹
+    |-build.js  项目打包构建脚本
+    |-build-server.js  运行服务器查看已打包项目
+    |-dev-client.js  开发服务器热重载脚本
+    |-dev-server.js  开发服务器运行脚本
+    |-utils.js  通用配置js
+    |-vue-loader.conf.js  vue-loader的配置
+    |-webpack.base.conf.js  webpack主要配置文件
+    |-webpack.dev.conf.js  webpack开发时扩展配置
+    |-webpack.prod.conf.js  webpack生产时扩展配置
+|-config    配置参数文件夹
+    |-dev.env.js  开发时环境变量
+    |-prod.env..js  生产时环境变量
+    |-index.js  webpack配置参数
+|-dist    打包后的项目发布文件夹
+-docs    项目文档
+-node_modules    项目开发依赖的包，无需开发时可删除，删除后需要再开发时，再cd到项目目录，运行npm install命令下载所有依赖即可
+-src    项目开发目录
+    |--assets   资源文件夹
+        |--fonts    字体文件夹
+        |--images   项目图片图标
+        |--libs    未经npm下载的第三方库
+    |--components   项目组件文件夹，详见docs
+    |--scripts    项目js模块
+        |--configValid.js    表单验证插件vue-form的配置参数，包含自定义匹配类型
+        |--common.js    公用模块，包含许多常用函数
+    |--services    ajax服务模块
+    |--store    vue状态存储，包括主页面的loading状态、toast状态等。详见vuex http://vuex.vuejs.org/zh-cn/state.html
+    |--styles    项目css模块
+    |--views    项目页面文件夹，具体页面介绍可见routes.js
+    |--App.vue    主页面架构
+    |--main.js    主入口文件。包括：模块引入和初始化，vue根节点渲染，vue全局方法定义等
+    |--routes.js    路由，项目页面介绍。详见vue-router官网
+|-static   未被引用并打包的模块，构建时会被复制到dist内
+    |--demo   测试用图片等文件夹，前后对接后应删除!!!
+|-.babelrc  babel（用于语法转换）的配置文件，详见babel官方
+|-index.html   项目入口（开发与生产都是）
+|-jsdoc.config.json    生成文档的配置，详见jsdoc官方
+|-package.json    项目信息，npm命令配置，生产开发依赖包
+
+二、技术、框架说明
+
+0、基础  vue2.0  https://cn.vuejs.org/v2/guide/
+
+1、ui框架  muse-ui  http://www.muse-ui.org  本项目有所扩展
+
+2、路由  vueRouter  http://router.vuejs.org/zh-cn/index.htm
+
+2、表单验证  VueForm  https://github.com/fergaldoyle/vue-form
+
+3、文件上传相关 webuploader  http://fex.baidu.com/webuploader/doc/index.html
+
+4、头像裁剪相关  cropperjs  https://github.com/fengyuanchen/cropper/blob/master/README.md
+
+5、AJAX相关  基于axios的ajax()方法 封装成与$.ajax类似，具体封装代码可见scripts/common.js
+
+三、命令说明
+cmd cd到项目目录后可运行以下命令
+1、npm install  //根据package.json里的配置下载依赖
+2、npm run 任务名  //自动化任务，具体运行的命令行可以见package.json里的scripts对象
+           npm run dev    //运行内置的热加载服务器
+           npm run build    //打包构建项目
+           npm run build-server    //运行服务器查看已构建项目
+           npm run docs    //生成项目文档
+其他常用说明
+   添加项目新依赖：  npm install  项目名@版本名 --save
+   添加开发用新依赖(编译相关)：  npm install  项目名@版本名 --save-dev
+   删除项目新依赖：  npm uninstall  项目名 --save
+
+四、开发环境
+
+1、node.js
+
+2、运行npm run dev  开启热加载服务器
+
+五、构建说明
+
+1、config中配置好打包目录
+        assetsPublicPath 为资源发布目录，默认   '/'
+        ！！！   build.assetsPublicPath 为构建时资源发布目录，需要根据实际开发配置 ！！！   
+
+2、运行npm run build
+
+六、接口、联调方式
+1、接口 mock
+     通过mock接口，可以服务器可以模拟后台返回的数据（本项目未使用）
+     mock文件夹内配置，文件结构如下
+module.exports = {
+  // 接口地址
+  api: '/api/hello',
+  // 返回数据 参考http://expressjs.com/zh-cn/4x/api.html
+  response: function (req, res) {
+    res.send(` <p>hello vue!</p>`);
+  }
+}
+
+3、代理  所有 mock 目录下定义的接口将会转发到 proxy 参数指定的机器
+    npm run dev -- --proxy=127.0.0.1:8080
+    npm run build-server -- --proxy=127.0.0.1:80
+

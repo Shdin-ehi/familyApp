@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/BigEventService.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/BigEventService.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module */
+
+import ajax from 'scripts/common'
+
+//模拟ajax，测试用，开发后删除
+function mockAjax(option,data,time){
+	var call=function(fun){
+		setTimeout(()=>{
+			fun&amp;&amp;fun(data)
+		},typeof time=='undefined'?1000:time)
+		return this
+	}
+	call(option?option.complete:null)
+	call(option?option.success:null)
+	return {
+		then:call,
+		complete:call,
+		done:call,
+		error:function() { return this }
+	}
+}
+
+/**
+ * 默认导出
+ * @type {Object}
+ * @property {Function} init 初始化基本数值,返回一个method集合
+ */
+export default {
+	init: function(bu) {
+		var baseUrl = bu;
+
+		return {
+			/**
+			 * 获取大事件列表
+			 * @method
+			 * @param {Object} option Ajax参数
+			 */
+			getMemos : function(option) {
+				// ajax(Object.assign({type:'get',url:baseUrl+'/getMemos'},option);
+				// 模拟
+				mockAjax(option,[{"id":11,"title":"增加两条记录，然后单项删除","start":"Fri May 07 00:00:00 CST 2017","allDay":true,"_type":"FmMemorabilia","content":"测试用内容，以下是附件相关内容展示和下载，请注意流量"},{"id":19,"title":"我的大事件","start":"Mon May 27 00:00:00 CST 2017","allDay":true,"_type":"FmMemorabilia"},{"id":20,"title":"今天发生件大事","start":"Tue May 28 00:00:00 CST 2017","allDay":true,"_type":"FmMemorabilia"},{"id":21,"title":"测试增加权限判断","start":"Wed May 05 00:00:00 CST 2017","allDay":true,"_type":"FmMemorabilia"},{"id":22,"title":"验证增加权限判断","start":"Wed May 05 00:00:00 CST 2017","allDay":true,"_type":"FmMemorabilia"},{"id":23,"title":"修改了再次测试增加权限判断","start":"Wed May 05 00:00:00 CST 2017","allDay":true,"_type":"FmMemorabilia"},{"id":25,"title":"测试删除操作权限","start":"Wed May 05 00:00:00 CST 2017","allDay":true,"_type":"FmMemorabilia"}],0);
+			},
+			/**
+			 * 获取大事件文件列表
+			 * @method
+			 * @param {Object} option Ajax参数
+			 */
+			getMemoFile : function(option) {
+				// ajax(Object.assign({type:'get',url:baseUrl+'/getMemoFile'},option);
+				// 模拟
+				mockAjax(option,[{
+                id: 1,
+                name:'文件1.jpg',
+                thumb:'static/demo/demo_thumb.jpg',
+                src:'static/demo/demo.jpg'
+              },{
+                id: 2,
+                name:'文件2.xls'
+              },{
+                id: 3,
+                name:'文件3.doc'
+              },{
+                id: 4,
+                name:'文件4.ppt'
+              },{
+                id: 5,
+                name:'文件5.mp4',
+                thumb:'static/demo/demo_thumb.jpg'
+              }],500);
+			}
+		}
+
+	}
+
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-components_appCalendar.html">components/appCalendar</a></li><li><a href="module-components_appLoading.html">components/appLoading</a></li><li><a href="module-components_appUserBox.html">components/appUserBox</a></li><li><a href="module-components_editImage.html">components/editImage</a></li><li><a href="module-components_fileList.html">components/fileList</a></li><li><a href="module-components_menuNava_menuNava.html">components/menuNava/menuNava</a></li><li><a href="module-components_menuNava_menuNavaItem.html">components/menuNava/menuNavaItem</a></li><li><a href="module-components_myInputPage.html">components/myInputPage</a></li><li><a href="module-components_mySelectPage.html">components/mySelectPage</a></li><li><a href="module-components_myWebuploader.html">components/myWebuploader</a></li><li><a href="module-components_textImgBox.html">components/textImgBox</a></li><li><a href="module-components_timeline_timeline.html">components/timeline/timeline</a></li><li><a href="module-components_timeline_timelineItem.html">components/timeline/timelineItem</a></li><li><a href="module-components_vImg.html">components/vImg</a></li><li><a href="module-scripts_common.html">scripts/common</a></li><li><a href="module-scripts_configValid.html">scripts/configValid</a></li><li><a href="module-scripts_LunarCalendar.html">scripts/LunarCalendar</a></li><li><a href="module-scripts_vueMethods.html">scripts/vueMethods</a></li><li><a href="module-services.html">services</a></li><li><a href="module-services_AnniversaryService.html">services/AnniversaryService</a></li><li><a href="module-services_ArchiveService.html">services/ArchiveService</a></li><li><a href="module-services_BigEventService.html">services/BigEventService</a></li><li><a href="module-services_FamilyService.html">services/FamilyService</a></li><li><a href="module-services_UserService.html">services/UserService</a></li><li><a href="module-vuex-history.html">vuex-history</a></li><li><a href="module-vuex-loading.html">vuex-loading</a></li><li><a href="module-vuex-toast.html">vuex-toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="Vue.html">Vue</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jun 30 2017 09:20:36 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

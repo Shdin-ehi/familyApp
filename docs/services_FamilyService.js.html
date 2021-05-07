@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/FamilyService.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/FamilyService.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module */
+
+import ajax from 'scripts/common'
+
+//模拟ajax，测试用，开发后删除
+function mockAjax(option,data,time){
+	var call=function(fun){
+		setTimeout(()=>{
+			fun&amp;&amp;fun(data)
+		},typeof time=='undefined'?1000:time)
+		return this
+	}
+	call(option?option.complete:null)
+	call(option?option.success:null)
+	return {
+		then:call,
+		complete:call,
+		done:call,
+		error:function() { return this }
+	}
+}
+
+/**
+ * 默认导出
+ * @type {Object}
+ * @property {Function} init 初始化基本数值,返回一个method集合
+ */
+export default {
+	init: function(bu) {
+		var baseUrl = bu;
+		return {
+			/**
+			 * 获取家庭成员列表
+			 * @method
+			 * @param {Object} option Ajax参数
+			 */
+			getFamilyMembers : function(option) {
+				// ajax(Object.assign({type:'get',url:baseUrl+'/getFamilyMembers'},option);
+				// 模拟
+				mockAjax(option,[
+            {id:1,username:'家庭成员1',avatar:'static/demo/demo1.jpg'},
+            {id:2,username:'家庭成员2',avatar:'static/demo/demo1.jpg'},
+            {id:3,username:'家庭成员3',avatar:'static/demo/demo1.jpg'},
+            {id:4,username:'家庭成员4',avatar:'static/demo/demo1.jpg'},
+            {id:5,username:'家庭成员5',avatar:'static/demo/demo1.jpg'}
+        ],0);
+			},
+			/**
+			 * 获取家庭成员信息
+			 * @method
+			 * @param {Object} option Ajax参数
+			 */
+			getFamilyMemberData : function(option) {
+				// ajax(Object.assign({type:'get',url:baseUrl+'/getFamilyMemberData'},option);
+				// 模拟
+				mockAjax(option,{id:'131',username:'xxx',own:'xx00409',avatar:'static/demo/demo1.jpg',character:'女儿',realName:'',phone:'',address:'东莞市'},0);
+			},
+			/**
+			 * 获取相册集
+			 * @method
+			 * @param {Object} option Ajax参数
+			 */
+			getAlbums : function(option) {
+				// ajax(Object.assign({type:'get',url:baseUrl+'/getAlbums'},option);
+				// 模拟
+				mockAjax(option,[
+            {id:1,title:'宝宝萌照',src:'static/demo/demo1.jpg'},
+            {id:2,title:'爸爸&amp;妈妈',src:'static/demo/demo.jpg'},
+            {id:3,title:'日常生活',src:'static/demo/demo.jpg'},
+            {id:4,title:'家居活动',src:'static/demo/demo1.jpg'}
+          ],0);
+			},
+			/**
+			 * 添加相册集
+			 * @method
+			 * @param {Object} option Ajax参数
+			 */
+			addAlbum : function(option) {			
+				// ajax(Object.assign({type:'post',url:baseUrl+'/addAlbum'},option);
+				mockAjax(option);
+			},
+			/**
+			 * 获取某个相册的信息
+			 * @method
+			 * @param {Object} option Ajax参数
+			 */
+			getAlbum : function(option) {
+				// ajax(Object.assign({type:'get',url:baseUrl+'/getAlbum'},option);
+				// 模拟
+				mockAjax(option,{id:1,title:'宝宝萌照',src:'static/demo/demo1.jpg'},0);
+			},
+			/**
+			 * 获取某个相册的照片
+			 * @method
+			 * @param {Object} option Ajax参数
+			 */
+			getPhotos : function(option) {
+				// ajax(Object.assign({type:'get',url:baseUrl+'/getPhotos'},option);
+				// 模拟
+				mockAjax(option,{
+            "aaData":[
+              {id:1,thumb:'static/demo/demo1.jpg',src:'static/demo/demo1.jpg',title:'图片1',uploadTime:'2017-05-17'},
+              {id:11,thumb:'static/demo/demo1.jpg',src:'static/demo/demo1.jpg',title:'图片1',uploadTime:'2017-05-17'},
+              {id:12,thumb:'static/demo/demo1.jpg',src:'static/demo/demo1.jpg',title:'图片1',uploadTime:'2017-05-17'},
+              {id:13,thumb:'static/demo/demo1.jpg',src:'static/demo/demo1.jpg',title:'图片1',uploadTime:'2017-05-17'},
+              {id:2,thumb:'static/demo/demo_thumb.jpg',src:'static/demo/demo.jpg',title:'图片2',uploadTime:'2017-05-15'},
+              {id:21,thumb:'static/demo/icon_menu_appliance.png',src:'static/demo/icon_menu_appliance.png',title:'图片3',uploadTime:'2017-05-15'},
+              {id:3,thumb:'static/demo/icon_menu_audio.png',src:'static/demo/icon_menu_audio.png',title:'图片4',uploadTime:'2017-05-14'},
+              {id:14,thumb:'static/demo/icon_menu_comprehensive.png',src:'static/demo/icon_menu_comprehensive.png',title:'图片5',uploadTime:'2017-05-17'}
+            ],
+            'totalPage':2
+          },600);
+			},
+			/**
+			 * 修改相册基本信息
+			 * @method
+			 * @param {Object} option Ajax参数
+			 */
+			editAlbum : function(option) {
+				// ajax(Object.assign({type:'post',url:baseUrl+'/editAlbum'},option);
+				// 模拟
+				mockAjax(option,{},400);
+			}
+		}
+
+	}
+
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-components_appCalendar.html">components/appCalendar</a></li><li><a href="module-components_appLoading.html">components/appLoading</a></li><li><a href="module-components_appUserBox.html">components/appUserBox</a></li><li><a href="module-components_editImage.html">components/editImage</a></li><li><a href="module-components_fileList.html">components/fileList</a></li><li><a href="module-components_menuNava_menuNava.html">components/menuNava/menuNava</a></li><li><a href="module-components_menuNava_menuNavaItem.html">components/menuNava/menuNavaItem</a></li><li><a href="module-components_myInputPage.html">components/myInputPage</a></li><li><a href="module-components_mySelectPage.html">components/mySelectPage</a></li><li><a href="module-components_myWebuploader.html">components/myWebuploader</a></li><li><a href="module-components_textImgBox.html">components/textImgBox</a></li><li><a href="module-components_timeline_timeline.html">components/timeline/timeline</a></li><li><a href="module-components_timeline_timelineItem.html">components/timeline/timelineItem</a></li><li><a href="module-components_vImg.html">components/vImg</a></li><li><a href="module-scripts_common.html">scripts/common</a></li><li><a href="module-scripts_configValid.html">scripts/configValid</a></li><li><a href="module-scripts_LunarCalendar.html">scripts/LunarCalendar</a></li><li><a href="module-scripts_vueMethods.html">scripts/vueMethods</a></li><li><a href="module-services.html">services</a></li><li><a href="module-services_AnniversaryService.html">services/AnniversaryService</a></li><li><a href="module-services_ArchiveService.html">services/ArchiveService</a></li><li><a href="module-services_BigEventService.html">services/BigEventService</a></li><li><a href="module-services_FamilyService.html">services/FamilyService</a></li><li><a href="module-services_UserService.html">services/UserService</a></li><li><a href="module-vuex-history.html">vuex-history</a></li><li><a href="module-vuex-loading.html">vuex-loading</a></li><li><a href="module-vuex-toast.html">vuex-toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="Vue.html">Vue</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jun 30 2017 09:20:36 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

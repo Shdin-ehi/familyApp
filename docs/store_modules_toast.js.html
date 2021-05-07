@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: store/modules/toast.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: store/modules/toast.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** 
+ * 全局的toast层 vuex用法见 {@link http://vuex.vuejs.org/zh-cn/state.html}
+ * @module vuex-toast
+ */
+
+import * as types from '../mutation-types'
+
+// 该模块的初始状态
+const state = {
+  toast:false, //toast层状态
+  toastText:'', //toast内容
+  toastTimer:null, //toast层计时器
+  toastCallback:null //toast层回调函数
+}
+
+// 相关的 mutations
+const mutations = {
+  [types.SET_TOAST] (state, toast) {
+    state.toast = toast
+  },
+  [types.SET_TOASTTEXT] (state, toastText) {
+    state.toastText = toastText
+  },
+  [types.SET_TOASTTIME] (state, toastTimer) {
+    state.toastTimer = toastTimer
+  },
+  [types.SET_TOASTCALLBACK] (state, callback) {
+    state.toastCallback = callback
+  },
+  [types.CLEAR_TOASTTIMER] (state) {
+    if (state.toastTimer) { clearTimeout(state.toastTimer) }
+  }
+}
+
+/**
+ * @type {Object}
+ * @property {Function} toast toast层的状态，true为显示，false为隐藏
+ * @property {Function} toastText toast层文字内容
+ */
+const getters = {
+  toast: state => state.toast,
+  toastText: state => state.toastText
+}
+
+/**
+ * @type {Object}
+ * @property {Function} showToast 显示toast层,参数1为内容，参数2为显示时间，参数3为隐藏后的回调
+ * @property {Function} hideToast 隐藏toast层
+ */
+const actions = {
+  showToast: ({ dispatch,commit,state}, {toastText,time,callback}) => {
+	 	commit(types.SET_TOASTTEXT,toastText)
+    commit(types.SET_TOAST,true)
+	 	commit(types.SET_TOASTCALLBACK,callback)
+	 	commit(types.CLEAR_TOASTTIMER)
+  	var timer = setTimeout(() => { 
+  		dispatch('hideToast')
+  	}, time||2000)
+	 	commit(types.SET_TOASTTIME,timer)
+	},
+  hideToast: ({ state,dispatch,commit }) => {
+    if(typeof state.toastCallback=='function') state.toastCallback();
+  	commit(types.SET_TOASTTEXT,'')
+    commit(types.SET_TOAST,false)
+  	commit(types.SET_TOASTCALLBACK,null)
+	 	commit(types.CLEAR_TOASTTIMER)
+	}
+}
+
+export default {
+  state,
+  mutations,
+  getters,
+  actions
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-components_appCalendar.html">components/appCalendar</a></li><li><a href="module-components_appLoading.html">components/appLoading</a></li><li><a href="module-components_appUserBox.html">components/appUserBox</a></li><li><a href="module-components_editImage.html">components/editImage</a></li><li><a href="module-components_fileList.html">components/fileList</a></li><li><a href="module-components_menuNava_menuNava.html">components/menuNava/menuNava</a></li><li><a href="module-components_menuNava_menuNavaItem.html">components/menuNava/menuNavaItem</a></li><li><a href="module-components_myInputPage.html">components/myInputPage</a></li><li><a href="module-components_mySelectPage.html">components/mySelectPage</a></li><li><a href="module-components_myWebuploader.html">components/myWebuploader</a></li><li><a href="module-components_textImgBox.html">components/textImgBox</a></li><li><a href="module-components_timeline_timeline.html">components/timeline/timeline</a></li><li><a href="module-components_timeline_timelineItem.html">components/timeline/timelineItem</a></li><li><a href="module-components_vImg.html">components/vImg</a></li><li><a href="module-scripts_common.html">scripts/common</a></li><li><a href="module-scripts_configValid.html">scripts/configValid</a></li><li><a href="module-scripts_LunarCalendar.html">scripts/LunarCalendar</a></li><li><a href="module-scripts_vueMethods.html">scripts/vueMethods</a></li><li><a href="module-services.html">services</a></li><li><a href="module-services_AnniversaryService.html">services/AnniversaryService</a></li><li><a href="module-services_ArchiveService.html">services/ArchiveService</a></li><li><a href="module-services_BigEventService.html">services/BigEventService</a></li><li><a href="module-services_FamilyService.html">services/FamilyService</a></li><li><a href="module-services_UserService.html">services/UserService</a></li><li><a href="module-vuex-history.html">vuex-history</a></li><li><a href="module-vuex-loading.html">vuex-loading</a></li><li><a href="module-vuex-toast.html">vuex-toast</a></li></ul><h3>Namespaces</h3><ul><li><a href="Vue.html">Vue</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jun 30 2017 09:20:36 GMT+0800 (中国标准时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

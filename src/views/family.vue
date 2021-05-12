@@ -4,7 +4,7 @@
       <mu-flexbox-item grow="0" class="app-img-title"><img src="../assets/images/title_home.png" style="margin:-5px auto -10px auto"></mu-flexbox-item>
       <mu-flexbox-item class="app-content">
         <app-menunav>
-          <app-menunav-item v-for="item,j in items" :to="{name:'familyMember',params:{id:item.id}}" :title="item.username"><div :style="{'height':'100%','width':'100%','border-radius':'50%','background':'url('+item.avatar+') center center / cover no-repeat'}"></div></app-menunav-item>
+          <app-menunav-item v-for="item,j in items" :to="{name:'familyMember',params:{id:item.userId}}" :title="item.ownerName"><div :style="{'height':'100%','width':'100%','border-radius':'50%','background':'url('+item.photoView+') center center / cover no-repeat'}"></div></app-menunav-item>
         </app-menunav>
       </mu-flexbox-item>
     </mu-flexbox>
@@ -28,6 +28,7 @@
     },
     methods: {
       getData (){
+     
         //获取用户列表
         services.FamilyService.getFamilyMembers({
           success:(data)=>{

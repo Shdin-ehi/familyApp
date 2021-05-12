@@ -37,8 +37,7 @@ export default {
 			 */
 			getFamilyMembers : function(option) {
 				
-			//	ajax(Object.assign({type:"get",url:"http://localhost:8090/fda/j_spring_security_check",data:{"j_username":"admin","password":"wanve123456","j_captcha":"5645"}}));
-				ajax(Object.assign({type:"get",url:"http://localhost:8090/fda/family/getFamilyMember2.do"},option));
+				ajax(Object.assign({type:"get",url:baseUrl+"/fda/family/getFamilyMembers.do"},option));
 			
 				
 				// 模拟
@@ -59,9 +58,9 @@ export default {
 			 * @param {Object} option Ajax参数
 			 */
 			getFamilyMemberData : function(option) {
-				// ajax(Object.assign({type:'get',url:baseUrl+'/getFamilyMemberData'},option);
+				ajax(Object.assign({type:"get",url:baseUrl+"/fda/family/familyMemberDetail.do"},option));
 				// 模拟
-				mockAjax(option,{id:'131',username:'xxx',own:'xx00409',avatar:'static/demo/demo1.jpg',character:'女儿',realName:'',phone:'',address:'东莞市'},0);
+				//mockAjax(option,{id:'131',username:'xxx',own:'xx00409',avatar:'static/demo/demo1.jpg',character:'女儿',realName:'',phone:'',address:'东莞市'},0);
 			},
 			/**
 			 * 获取相册集

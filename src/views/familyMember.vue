@@ -1,17 +1,17 @@
 <template>
 <div class="app-view-container">
-  <app-user-box :avatar="user.avatar" :username="user.username">
-    <div>档案所属号：{{user.own}}</div>
+  <app-user-box :avatar="user.photoView" :username="user.userName">
+    <div>档案所属号：{{user.ownerIdcard}}</div>
   </app-user-box>
   <div class="app-lefttop-btn-wr"><mu-raised-button class="size-s" label="返回" @click.native="$router.back()"/></div>
   <mu-list class="app-list">
      <mu-list-item title="家庭角色">
-       <div slot="after">{{user.character}}</div>
+       <div slot="after">{{user.familyRole}}</div>
      </mu-list-item>
   </mu-list>
    <mu-list class="app-list">
      <mu-list-item title="真实姓名">
-       <div slot="after">{{user.realName}}</div>
+       <div slot="after">{{user.ownerName}}</div>
      </mu-list-item>
      <mu-divider/>
      <mu-list-item title="手机号码">
@@ -19,7 +19,7 @@
      </mu-list-item>
      <mu-divider/>
      <mu-list-item title="联系地址">
-       <div slot="after">{{user.address}}</div>
+       <div slot="after">{{user.linkAddress}}</div>
      </mu-list-item>
    </mu-list>
 </div>
@@ -31,7 +31,7 @@
   export default {
     data:function() {
       return {
-        user:{id:'',username:'',own:'',avatar:'',character:'',realName:'',phone:'',address:''}
+        user:{id:'',userName:'',ownerIdcard:'',photoView:'',familyRole:'',ownerName:'',phone:'',linkAddress:''}
       }
     },
     computed:{
@@ -47,9 +47,8 @@
       next()
     },
     methods:{
-      getData:function(){
-        //获取用户信息
-        services.FamilyService.getFamilyMemberData({
+      getData:function(){ 
+        services.FamilyService.getFamilyMemberData({data:{userId:this.$route.params.id},
           success:(data)=>{
             this.user=data
           }

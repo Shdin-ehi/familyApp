@@ -28,26 +28,7 @@
                 <img src="../assets/images/sign_other.png">
               </text-img-box>
             </mu-flexbox-item>
-            <mu-flexbox-item :style="itemData.anniversaryType==4?{'border-bottom':'2px solid #1b94d6'}:''" @click.native="itemData.anniversaryType=4">
-              <text-img-box title="其他纪念日">
-                <img src="../assets/images/sign_other.png">
-              </text-img-box>
-            </mu-flexbox-item>
-            <mu-flexbox-item :style="itemData.anniversaryType==4?{'border-bottom':'2px solid #1b94d6'}:''" @click.native="itemData.anniversaryType=4">
-              <text-img-box title="其他纪念日">
-                <img src="../assets/images/sign_other.png">
-              </text-img-box>
-            </mu-flexbox-item>
-             <mu-flexbox-item :style="itemData.anniversaryType==4?{'border-bottom':'2px solid #1b94d6'}:''" @click.native="itemData.anniversaryType=4">
-              <text-img-box title="其他纪念日">
-                <img src="../assets/images/sign_other.png">
-              </text-img-box>
-            </mu-flexbox-item>
-             <mu-flexbox-item :style="itemData.anniversaryType==4?{'border-bottom':'2px solid #1b94d6'}:''" @click.native="itemData.anniversaryType=4">
-              <text-img-box title="其他纪念日">
-                <img src="../assets/images/sign_other.png">
-              </text-img-box>
-            </mu-flexbox-item>
+          
 
           </mu-flexbox>
         </mu-list>

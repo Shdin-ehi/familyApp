@@ -58,9 +58,9 @@ export default {
 			 * @param {Object} option Ajax参数
 			 */
 			getFamilyMemberData : function(option) {
-				ajax(Object.assign({type:"get",url:baseUrl+"/fda/family/familyMemberDetail.do"},option));
+					ajax(Object.assign({type:"get",url:baseUrl+"/fda/family/familyMemberDetail.do"},option));
 				// 模拟
-				//mockAjax(option,{id:'131',username:'xxx',own:'xx00409',avatar:'static/demo/demo1.jpg',character:'女儿',realName:'',phone:'',address:'东莞市'},0);
+			  //	mockAjax(option,{id:'131',username:'xxx',own:'xx00409',avatar:'static/demo/demo1.jpg',character:'女儿',realName:'',phone:'',address:'东莞市'},0);
 			},
 			/**
 			 * 获取相册集
